@@ -11,7 +11,11 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime
 RUN apt-get -y install wget gnupg zip unzip
 
 # seleniumのインストール
-RUN apt-get install -y nodejs npm
+#RUN apt-get install -y nodejs npm
+RUN apt-get install -y npm
+RUN npm install --global n
+RUN n stable
+RUN apt-get install -y npm nodejs
 
 RUN npm install --global yarn
 RUN yarn global add selenium-side-runner
@@ -27,10 +31,19 @@ RUN apt-get update
 #RUN apt-get -y install /usr/local/lib/google-chrome-stable_current_amd64.deb
 #RUN yarn global add chromedriver
 
-#--Chrome 102.0.5005.61を使う場合
-COPY packages/google-chrome-stable_102_0_5005_61_amd64.deb /usr/local/lib/
-RUN apt-get -y install /usr/local/lib/google-chrome-stable_102_0_5005_61_amd64.deb
+##--Chrome 114.0.5735.90
+ARG CHROME_VERSION
+#RUN cd /usr/local/lib/;  \
+#    wget --no-check-certificate \
+#    https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
+COPY packages/google-chrome-stable_${CHROME_VERSION}_amd64.deb /usr/local/lib/
+RUN apt-get -y install /usr/local/lib/google-chrome-stable_${CHROME_VERSION}_amd64.deb
 RUN yarn global add chromedriver
+
+##--Chrome 102.0.5005.61を使う場合
+#COPY packages/google-chrome-stable_102_0_5005_61_amd64.deb /usr/local/lib/
+#RUN apt-get -y install /usr/local/lib/google-chrome-stable_102_0_5005_61_amd64.deb
+#RUN yarn global add chromedriver
 
 #--Chrome 71.0.3578.80を使う場合
 #COPY packages/google-chrome-stable_71_0_3578_80_amd64.deb /usr/local/lib/
