@@ -9,6 +9,13 @@ if [ "${DOCKER_VERSION}" = "" -o "${CHROME_VERSION}" = "" ]; then
   exit 1
 fi
 
+cd $SCRIPT_DIR/package
+if [ ! -f google-chrome-stable_${CHROME_VERSION}_amd64.deb ]; then
+	wget --no-check-certificate https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
+fi
+
+cd $SCRIPT_DIR
+
 if [ ! "${DOCKER_USER}" = "" -a ! "${DOCKER_PASS}" = "" ]; then
   docker login -u ${DOCKER_USER} -p ${DOCKER_PASS}
 else

@@ -1,0 +1,11 @@
+# User specific & automatically generated files #
+#################################################
+
+/.project
+/.projectKnowledge
+nbproject/
+.log
+test/logs
+test/nc3*
+.idea/
+/packages
