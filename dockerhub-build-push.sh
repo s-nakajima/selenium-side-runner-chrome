@@ -9,7 +9,7 @@ if [ "${DOCKER_VERSION}" = "" -o "${CHROME_VERSION}" = "" ]; then
   exit 1
 fi
 
-cd $SCRIPT_DIR/package
+cd $SCRIPT_DIR/packages
 if [ ! -f google-chrome-stable_${CHROME_VERSION}_amd64.deb ]; then
 	wget --no-check-certificate https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
 fi
