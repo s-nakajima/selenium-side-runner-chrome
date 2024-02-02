@@ -3,15 +3,20 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 cd $SCRIPT_DIR
 
-if [ "${DOCKER_VERSION}" = "" -o "${CHROME_VERSION}" = "" -o "${CHROMEDRIVER_VERSION}" = "" ]; then
+if [ "${DOCKER_VERSION}" = "" -o "${CHROME_VERSION}" = "" ]; then
   echo "Invalid arguments."
   echo "bash ${0} <docker_version> <chrome_version>"
   exit 1
 fi
+CHROMEDRIVER_VERSION=${CHROME_VERSION%%-*}
 
 cd $SCRIPT_DIR/packages
 if [ ! -f google-chrome-stable_${CHROME_VERSION}_amd64.deb ]; then
 	wget --no-check-certificate https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
+fi
+if [ ! -f chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip ]; then
+	wget --no-check-certificate https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip \
+	-O chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip
 fi
 
 cd $SCRIPT_DIR

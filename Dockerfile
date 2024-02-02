@@ -18,7 +18,6 @@ RUN n stable
 RUN apt-get install -y npm nodejs
 
 RUN npm install --global yarn
-RUN yarn global add selenium-side-runner
 
 RUN apt-get update
 
@@ -39,7 +38,12 @@ ARG CHROMEDRIVER_VERSION
 #    https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
 COPY packages/google-chrome-stable_${CHROME_VERSION}_amd64.deb /usr/local/lib/
 RUN apt-get -y install /usr/local/lib/google-chrome-stable_${CHROME_VERSION}_amd64.deb
-RUN yarn global add chromedriver@${CHROMEDRIVER_VERSION}
+RUN yarn cache clean
+RUN yarn global add selenium-side-runner@3.17.0
+
+COPY packages/chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip /usr/local/lib/
+RUN cd /usr/local/lib/; unzip chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip
+RUN mv /usr/local/lib/chromedriver /usr/local/bin/
 
 ##--Chrome 102.0.5005.61を使う場合
 #COPY packages/google-chrome-stable_102_0_5005_61_amd64.deb /usr/local/lib/
