@@ -42,7 +42,7 @@ RUN yarn cache clean
 RUN yarn global add selenium-side-runner@3.17.0
 
 COPY packages/chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip /usr/local/lib/
-RUN cd /usr/local/lib/; unzip chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip
+RUN cd /usr/local/lib/; unzip -j chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip
 RUN mv /usr/local/lib/chromedriver /usr/local/bin/
 
 ##--Chrome 102.0.5005.61を使う場合

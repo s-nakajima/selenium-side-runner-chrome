@@ -15,8 +15,14 @@ if [ ! -f google-chrome-stable_${CHROME_VERSION}_amd64.deb ]; then
 	wget --no-check-certificate https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
 fi
 if [ ! -f chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip ]; then
-	wget --no-check-certificate https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip \
-	-O chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip
+	major=${CHROMEDRIVER_VERSION%%.*}
+	if [ "$major" = "114" ]; then
+		wget --no-check-certificate -O chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip \
+			https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip
+	else
+		wget --no-check-certificate -O chromedriver_${CHROMEDRIVER_VERSION}_linux64.zip \
+			https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${CHROMEDRIVER_VERSION}/linux64/chromedriver-linux64.zip
+	fi
 fi
 
 cd $SCRIPT_DIR
