@@ -33,12 +33,13 @@ RUN apt-get update
 
 ##--Chrome 114.0.5735.90
 ARG CHROME_VERSION
+ARG CHROMEDRIVER_VERSION
 #RUN cd /usr/local/lib/;  \
 #    wget --no-check-certificate \
 #    https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}_amd64.deb
 COPY packages/google-chrome-stable_${CHROME_VERSION}_amd64.deb /usr/local/lib/
 RUN apt-get -y install /usr/local/lib/google-chrome-stable_${CHROME_VERSION}_amd64.deb
-RUN yarn global add chromedriver
+RUN yarn global add chromedriver@${CHROMEDRIVER_VERSION}
 
 ##--Chrome 102.0.5005.61を使う場合
 #COPY packages/google-chrome-stable_102_0_5005_61_amd64.deb /usr/local/lib/

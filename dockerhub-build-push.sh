@@ -3,7 +3,7 @@
 SCRIPT_DIR=$(cd $(dirname $0); pwd)
 cd $SCRIPT_DIR
 
-if [ "${DOCKER_VERSION}" = "" -o "${CHROME_VERSION}" = "" ]; then
+if [ "${DOCKER_VERSION}" = "" -o "${CHROME_VERSION}" = "" -o "${CHROMEDRIVER_VERSION}" = "" ]; then
   echo "Invalid arguments."
   echo "bash ${0} <docker_version> <chrome_version>"
   exit 1
@@ -22,7 +22,9 @@ else
   docker login
 fi
 
-docker build -t selenium-side-runner-chrome --build-arg CHROME_VERSION=${CHROME_VERSION} .
+docker build -t selenium-side-runner-chrome \
+--build-arg CHROME_VERSION=${CHROME_VERSION} \
+--build-arg CHROMEDRIVER_VERSION=${CHROMEDRIVER_VERSION} .
 docker tag selenium-side-runner-chrome:latest nakazii/selenium-side-runner-chrome:${DOCKER_VERSION}
 
 docker push nakazii/selenium-side-runner-chrome:${DOCKER_VERSION}
